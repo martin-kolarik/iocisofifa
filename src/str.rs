@@ -4,6 +4,12 @@
 use crate::{country::Country, fifa, interface::IocIsoFifa, ioc, iso_alpha3, uppercase::uppercase};
 
 impl IocIsoFifa for &str {
+    fn from_numeric(numeric: u32) -> Option<Self> {
+        Country::from_numeric(numeric)
+            .as_ref()
+            .and_then(|country| country.alpha3_ioc().or_else(|| country.fifa()))
+    }
+
     fn from_alpha2(alpha2: &str) -> Option<&'static str> {
         Country::from_alpha2(alpha2)
             .as_ref()
@@ -74,6 +80,14 @@ impl IocIsoFifa for &str {
         Country::from_fifa_alpha3(code)
             .as_ref()
             .and_then(Country::alpha3_fifa)
+    }
+
+    fn numeric(&self) -> Option<u32> {
+        iso_alpha3::alpha3_to_country(self)
+            .or_else(|| ioc::ioc_to_country(self))
+            .or_else(|| fifa::fifa_to_country(self))
+            .as_ref()
+            .and_then(Country::numeric)
     }
 
     fn alpha2(&self) -> Option<&'static str> {

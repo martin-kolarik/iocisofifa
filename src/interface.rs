@@ -1,4 +1,5 @@
 pub trait IocIsoFifa: Sized {
+    fn from_numeric(numeric: u32) -> Option<Self>;
     fn from_alpha2(alpha2: &str) -> Option<Self>;
     fn from_alpha3(alpha3: &str) -> Option<Self>;
     fn from_iso_name(name: &str) -> Option<Self>;
@@ -13,6 +14,8 @@ pub trait IocIsoFifa: Sized {
     fn from_ioc_iso_name(name: &str) -> Option<Self>;
     fn from_fifa_alpha3(code: &str) -> Option<Self>;
 
+
+    fn numeric(&self) -> Option<u32>;
     fn alpha2(&self) -> Option<&'static str>;
     fn alpha3(&self) -> Option<&'static str>;
     fn iso_name(&self) -> Option<&'static str>;
