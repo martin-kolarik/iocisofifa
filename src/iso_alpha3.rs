@@ -766,7 +766,3 @@ pub const fn country_to_alpha3(country: Country) -> Option<&'static str> {
     };
     Some(alpha3)
 }
-
-pub(crate) fn alpha3_to_alpha3(candidate: &str) -> Option<&'static str> {
-    alpha3_to_country(candidate).and_then(country_to_alpha3)
-}

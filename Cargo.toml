@@ -4,10 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-default = ["iso3166", "isocountry"]
-isocountry = ["dep:isocountry"]
-iso3166 = ["dep:iso3166"]
+default = ["serde"]
+serde = ["dep:serde"]
 
 [dependencies]
-isocountry = { version = "0.3.2", optional = true }
-iso3166 = { version = "1.0.1", optional = true }
+serde = { version = "1.0", default-features = false, optional = true }

@@ -21,7 +21,7 @@ const AIA: IsoFifa = Same(Country::AIA);
 const ATA: IsoFifa = Different(Country::ATA, "ROS");
 const ATG: IsoFifa = Same(Country::ATG);
 const ARG: IsoFifa = Same(Country::ARG);
-const ARM: IsoFifa = Different(Country::ARM, "ARM");
+const ARM: IsoFifa = Same(Country::ARM);
 const ABW: IsoFifa = Different(Country::ABW, "ARU");
 const AUS: IsoFifa = Same(Country::AUS);
 const AUT: IsoFifa = Same(Country::AUT);
@@ -38,7 +38,7 @@ const BMU: IsoFifa = Different(Country::BMU, "BER");
 const BTN: IsoFifa = Different(Country::BTN, "BHU");
 const BOL: IsoFifa = Same(Country::BOL);
 const BES: IsoFifa = Different(Country::BES, "ANT");
-const BIH: IsoFifa = Different(Country::BIH, "BIH");
+const BIH: IsoFifa = Same(Country::BIH);
 const BWA: IsoFifa = Different(Country::BWA, "BOT");
 const BVT: IsoFifa = Iso(Country::BVT);
 const BRA: IsoFifa = Same(Country::BRA);
@@ -93,7 +93,7 @@ const FRA: IsoFifa = Same(Country::FRA);
 const GUF: IsoFifa = Same(Country::GUF);
 const PYF: IsoFifa = Different(Country::PYF, "TAH");
 const ATF: IsoFifa = Iso(Country::ATF);
-const GAB: IsoFifa = Different(Country::GAB, "GAB");
+const GAB: IsoFifa = Same(Country::GAB);
 const GMB: IsoFifa = Different(Country::GMB, "GAM");
 const GEO: IsoFifa = Same(Country::GEO);
 const DEU: IsoFifa = Different(Country::DEU, "GER");
@@ -263,23 +263,23 @@ const ZWE: IsoFifa = Different(Country::ZWE, "ZIM");
 // FIFA special codes
 const KOS: &str = "KOS";
 const KOS_FIFA: IsoFifa = Different(Country::XKX, KOS);
-const KOS_NAME: &str = "Kosovo";
+// const KOS_NAME: &str = "Kosovo";
 
 const ENG: &str = "ENG";
 const ENG_FIFA: IsoFifa = Different(Country::ENG, ENG);
-const ENG_NAME: &str = "England";
+// const ENG_NAME: &str = "England";
 
 const NIR: &str = "NIR";
 const NIR_FIFA: IsoFifa = Different(Country::NIR, NIR);
-const NIR_NAME: &str = "Northern Ireland";
+// const NIR_NAME: &str = "Northern Ireland";
 
 const SCO: &str = "SCO";
 const SCO_FIFA: IsoFifa = Different(Country::SCO, SCO);
-const SCO_NAME: &str = "Scotland";
+// const SCO_NAME: &str = "Scotland";
 
 const WAL: &str = "WAL";
 const WAL_FIFA: IsoFifa = Different(Country::WAL, WAL);
-const WAL_NAME: &str = "Wales";
+// const WAL_NAME: &str = "Wales";
 
 const COUNTRY_FIFA: [&'static IsoFifa; 254] = [
     &AFG, &ALA, &ALB, &DZA, &ASM, &AND, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE,
@@ -315,19 +315,4 @@ pub fn country_to_fifa(candidate: Country) -> Option<&'static str> {
         Different(country, ioc) if candidate == *country => Some(*ioc),
         _ => None,
     })
-}
-
-pub fn fifa_to_fifa(candidate: &str) -> Option<&'static str> {
-    fifa_to_country(candidate).and_then(country_to_fifa)
-}
-
-pub fn fifa_to_name(fifa_candidate: &str) -> Option<&'static str> {
-    match fifa_candidate {
-        KOS => Some(KOS_NAME),
-        ENG => Some(ENG_NAME),
-        NIR => Some(NIR_NAME),
-        SCO => Some(SCO_NAME),
-        WAL => Some(WAL_NAME),
-        _ => None,
-    }
 }

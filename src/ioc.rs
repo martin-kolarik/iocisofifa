@@ -265,7 +265,7 @@ const KOS: &str = "KOS";
 const KOS_IOC: IsoIoc = Different(Country::XKX, KOS);
 
 const AIN: &str = "AIN";
-const AIN_IOC: IsoIoc = Different(Country::AIN, KOS);
+const AIN_IOC: IsoIoc = Different(Country::AIN, AIN);
 
 const EOR: &str = "EOR";
 const EOR_IOC: IsoIoc = Different(Country::EOR, EOR);
@@ -316,8 +316,4 @@ pub fn country_to_ioc(candidate: Country) -> Option<&'static str> {
         Different(country, ioc) if candidate == *country => Some(*ioc),
         _ => None,
     })
-}
-
-pub fn ioc_to_ioc(candidate: &str) -> Option<&'static str> {
-    ioc_to_country(candidate).and_then(country_to_ioc)
 }

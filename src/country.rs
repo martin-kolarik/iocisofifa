@@ -1,3 +1,11 @@
+use crate::{
+    fifa, ioc, ioc_name, iso_alpha2,
+    iso_alpha3::{self},
+    iso_name,
+    uppercase::uppercase,
+    IocIsoFifa,
+};
+
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Country {
     AFG = 4,
@@ -268,4 +276,118 @@ pub enum Country {
     NIR = 921,
     SCO = 922,
     WAL = 923,
+}
+
+impl IocIsoFifa for Country {
+    fn from_alpha2(alpha2: &str) -> Option<Self> {
+        let mut buffer = [0u8; 2];
+        let candidate = uppercase(alpha2, &mut buffer)?;
+        iso_alpha2::alpha2_to_country(candidate)
+    }
+
+    fn from_alpha3(alpha3: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(alpha3, &mut buffer)?;
+        iso_alpha3::alpha3_to_country(candidate)
+    }
+
+    fn from_iso_name(name: &str) -> Option<Self> {
+        iso_name::name_to_country(name)
+    }
+
+    fn from_ioc(ioc: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(ioc, &mut buffer)?;
+        ioc::ioc_to_country(candidate)
+    }
+
+    fn from_ioc_name(name: &str) -> Option<Self> {
+        ioc_name::name_to_country(name)
+    }
+
+    fn from_fifa(fifa: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(fifa, &mut buffer)?;
+        fifa::fifa_to_country(candidate)
+    }
+
+    fn from_alpha3_ioc(code: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(code, &mut buffer)?;
+        iso_alpha3::alpha3_to_country(candidate).or_else(|| ioc::ioc_to_country(candidate))
+    }
+
+    fn from_alpha3_fifa(code: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(code, &mut buffer)?;
+        iso_alpha3::alpha3_to_country(candidate).or_else(|| fifa::fifa_to_country(candidate))
+    }
+
+    fn from_iso_ioc_name(name: &str) -> Option<Self> {
+        iso_name::name_to_country(name).or_else(|| ioc_name::name_to_country(name))
+    }
+
+    fn from_ioc_alpha3(code: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(code, &mut buffer)?;
+        ioc::ioc_to_country(candidate).or_else(|| iso_alpha3::alpha3_to_country(candidate))
+    }
+
+    fn from_ioc_iso_name(name: &str) -> Option<Self> {
+        ioc_name::name_to_country(name).or_else(|| iso_name::name_to_country(name))
+    }
+
+    fn from_fifa_alpha3(code: &str) -> Option<Self> {
+        let mut buffer = [0u8; 3];
+        let candidate = uppercase(code, &mut buffer)?;
+        fifa::fifa_to_country(candidate).or_else(|| iso_alpha3::alpha3_to_country(candidate))
+    }
+
+    fn alpha2(&self) -> Option<&'static str> {
+        iso_alpha2::country_to_alpha2(*self)
+    }
+
+    fn alpha3(&self) -> Option<&'static str> {
+        iso_alpha3::country_to_alpha3(*self)
+    }
+
+    fn iso_name(&self) -> Option<&'static str> {
+        iso_name::country_to_name(*self)
+    }
+
+    fn ioc(&self) -> Option<&'static str> {
+        ioc::country_to_ioc(*self)
+    }
+
+    fn ioc_name(&self) -> Option<&'static str> {
+        ioc_name::country_to_name(*self)
+    }
+
+    fn fifa(&self) -> Option<&'static str> {
+        fifa::country_to_fifa(*self)
+    }
+
+    fn alpha3_ioc(&self) -> Option<&'static str> {
+        iso_alpha3::country_to_alpha3(*self).or_else(|| ioc::country_to_ioc(*self))
+    }
+
+    fn iso_ioc_name(&self) -> Option<&'static str> {
+        iso_name::country_to_name(*self).or_else(|| ioc_name::country_to_name(*self))
+    }
+
+    fn alpha3_fifa(&self) -> Option<&'static str> {
+        iso_alpha3::country_to_alpha3(*self).or_else(|| fifa::country_to_fifa(*self))
+    }
+
+    fn ioc_alpha3(&self) -> Option<&'static str> {
+        ioc::country_to_ioc(*self).or_else(|| iso_alpha3::country_to_alpha3(*self))
+    }
+
+    fn ioc_iso_name(&self) -> Option<&'static str> {
+        ioc_name::country_to_name(*self).or_else(|| iso_name::country_to_name(*self))
+    }
+
+    fn fifa_alpha3(&self) -> Option<&'static str> {
+        fifa::country_to_fifa(*self).or_else(|| iso_alpha3::country_to_alpha3(*self))
+    }
 }
