@@ -6,7 +6,7 @@ use crate::{
     IocIsoFifa,
 };
 
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Country {
     AFG = 4,
     ALA = 248,
