@@ -16,6 +16,7 @@ pub enum Country {
     ALA = 248,
     ALB = 8,
     AND = 20,
+    ANT = 525, // IOC, historical
     ARE = 784,
     ARG = 32,
     ARM = 51,
@@ -284,6 +285,7 @@ impl IocIsoFifa for Country {
             20 => Self::AND,
             24 => Self::AGO,
             660 => Self::AIA,
+            525 => Self::ANT,
             10 => Self::ATA,
             28 => Self::ATG,
             32 => Self::ARG,

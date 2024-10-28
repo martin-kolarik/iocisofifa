@@ -7,6 +7,7 @@ const ALB: CountryName = (Country::ALB, "Albania");
 const DZA: CountryName = (Country::DZA, "Algeria");
 const ASM: CountryName = (Country::ASM, "American Samoa");
 const AND: CountryName = (Country::AND, "Andorra");
+const ANT: CountryName = (Country::ANT, "Netherlands Antilles");
 const AGO: CountryName = (Country::AGO, "Angola");
 const AIA: CountryName = (Country::AIA, "Anguilla");
 const ATA: CountryName = (Country::ATA, "Antarctica");
@@ -253,23 +254,23 @@ const ROC: CountryName = (Country::ROC, "Russian Olympic Committee");
 const RPC: CountryName = (Country::RPC, "Russian Paralympic Committee");
 const RPT: CountryName = (Country::RPT, "Refugee Paralympic Team");
 
-const COUNTRY_NAME: [&CountryName; 248] = [
-    &AFG, &ALB, &DZA, &ASM, &AND, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE, &BHS,
-    &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT, &BRA, &BRN,
-    &BGR, &BFA, &BDI, &KHM, &CMR, &CAN, &CPV, &CYM, &CAF, &TCD, &CHL, &CHN, &TWN, &CXR, &CCK, &COL,
-    &COM, &COG, &COK, &CRI, &CIV, &HRV, &CUB, &CYP, &CZE, &DNK, &DJI, &DMA, &DOM, &ECU, &EGY, &SLV,
-    &ENG, &GNQ, &ERI, &EST, &ETH, &FLK, &FRO, &FJI, &FIN, &FRA, &GUF, &PYF, &GAB, &GMB, &GEO, &DEU,
-    &GHA, &GIB, &GRC, &GRL, &GRD, &GLP, &GUM, &GTM, &GIN, &GNB, &GUY, &HTI, &HMD, &HND, &HKG, &HUN,
-    &ISL, &IND, &IDN, &IRN, &IRQ, &IRL, &ISR, &ITA, &JAM, &JPN, &JOR, &KAZ, &KEN, &KIR, &KOR, &PRK,
-    &KWT, &KGZ, &LAO, &LVA, &LBN, &LSO, &LBR, &LBY, &LIE, &LTU, &LUX, &MAC, &MKD, &MDG, &MWI, &MYS,
-    &MDV, &MLI, &MLT, &MHL, &MTQ, &MRT, &MUS, &MYT, &MEX, &FSM, &MDA, &MCO, &MNG, &MNE, &MSR, &MAR,
-    &MOZ, &MMR, &NAM, &NRU, &NPL, &NLD, &NEU, &NCL, &NZL, &NIC, &NER, &NGA, &NIU, &NFK, &NIR, &MNP,
-    &NOR, &OMN, &PAK, &PLW, &PAN, &PNG, &PRY, &PER, &PHL, &PCN, &POL, &PRT, &PRI, &QAT, &XKX1,
-    &XKX2, &REU, &ROU, &RUS, &RWA, &SHN, &KNA, &LCA, &SPM, &VCT, &WSM, &SMR, &SAU, &SCO, &SEN,
-    &SRB, &SYC, &SLE, &SGP, &SVK, &SVN, &STP, &SLB, &SOM, &ZAF, &SGS, &ESP, &LKA, &SDN, &SUR, &SJM,
-    &SWE, &CHE, &SYR, &TJK, &TZA, &THA, &TLS, &TGO, &TKL, &TON, &TTO, &TUN, &TUR, &TKM, &TCA, &TUV,
-    &UGA, &UKR, &ARE, &GBR, &USA, &URY, &UZB, &VUT, &VAT, &VEN, &VNM, &VGB, &VIR, &VRT, &WAL, &WLF,
-    &ESH, &YEM, &ZMB, &ZWE, &AIN, &EOR, &NPA, &ROC, &RPC, &RPT,
+const COUNTRY_NAME: [&CountryName; 249] = [
+    &AFG, &ALB, &DZA, &ASM, &AND, &ANT, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE,
+    &BHS, &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT, &BRA,
+    &BRN, &BGR, &BFA, &BDI, &KHM, &CMR, &CAN, &CPV, &CYM, &CAF, &TCD, &CHL, &CHN, &TWN, &CXR, &CCK,
+    &COL, &COM, &COG, &COK, &CRI, &CIV, &HRV, &CUB, &CYP, &CZE, &DNK, &DJI, &DMA, &DOM, &ECU, &EGY,
+    &SLV, &ENG, &GNQ, &ERI, &EST, &ETH, &FLK, &FRO, &FJI, &FIN, &FRA, &GUF, &PYF, &GAB, &GMB, &GEO,
+    &DEU, &GHA, &GIB, &GRC, &GRL, &GRD, &GLP, &GUM, &GTM, &GIN, &GNB, &GUY, &HTI, &HMD, &HND, &HKG,
+    &HUN, &ISL, &IND, &IDN, &IRN, &IRQ, &IRL, &ISR, &ITA, &JAM, &JPN, &JOR, &KAZ, &KEN, &KIR, &KOR,
+    &PRK, &KWT, &KGZ, &LAO, &LVA, &LBN, &LSO, &LBR, &LBY, &LIE, &LTU, &LUX, &MAC, &MKD, &MDG, &MWI,
+    &MYS, &MDV, &MLI, &MLT, &MHL, &MTQ, &MRT, &MUS, &MYT, &MEX, &FSM, &MDA, &MCO, &MNG, &MNE, &MSR,
+    &MAR, &MOZ, &MMR, &NAM, &NRU, &NPL, &NLD, &NEU, &NCL, &NZL, &NIC, &NER, &NGA, &NIU, &NFK, &NIR,
+    &MNP, &NOR, &OMN, &PAK, &PLW, &PAN, &PNG, &PRY, &PER, &PHL, &PCN, &POL, &PRT, &PRI, &QAT,
+    &XKX1, &XKX2, &REU, &ROU, &RUS, &RWA, &SHN, &KNA, &LCA, &SPM, &VCT, &WSM, &SMR, &SAU, &SCO,
+    &SEN, &SRB, &SYC, &SLE, &SGP, &SVK, &SVN, &STP, &SLB, &SOM, &ZAF, &SGS, &ESP, &LKA, &SDN, &SUR,
+    &SJM, &SWE, &CHE, &SYR, &TJK, &TZA, &THA, &TLS, &TGO, &TKL, &TON, &TTO, &TUN, &TUR, &TKM, &TCA,
+    &TUV, &UGA, &UKR, &ARE, &GBR, &USA, &URY, &UZB, &VUT, &VAT, &VEN, &VNM, &VGB, &VIR, &VRT, &WAL,
+    &WLF, &ESH, &YEM, &ZMB, &ZWE, &AIN, &EOR, &NPA, &ROC, &RPC, &RPT,
 ];
 
 pub fn name_to_country(name: &str) -> Option<Country> {

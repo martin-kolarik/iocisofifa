@@ -17,6 +17,7 @@ const DZA: IsoIoc = Different(Country::DZA, "ALG");
 const ASM: IsoIoc = Different(Country::ASM, "ASA");
 const AND: IsoIoc = Same(Country::AND);
 const AGO: IsoIoc = Different(Country::AGO, "ANG");
+const AHO: IsoIoc = Different(Country::ANT, "AHO");
 const AIA: IsoIoc = Same(Country::AIA);
 const ATA: IsoIoc = Same(Country::ATA);
 const ATG: IsoIoc = Different(Country::ATG, "ANT");
@@ -282,24 +283,24 @@ const RPC_IOC: IsoIoc = Different(Country::RPC, RPC);
 pub const RPT: &str = "RPT";
 const RPT_IOC: IsoIoc = Different(Country::RPT, RPT);
 
-const COUNTRY_IOC: [&'static IsoIoc; 256] = [
-    &AFG, &ALA, &ALB, &DZA, &ASM, &AND, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE,
-    &BHS, &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT, &BRA,
-    &IOT, &VGB, &BRN, &BGR, &BFA, &BDI, &CPV, &KHM, &CMR, &CAN, &CYM, &CAF, &TCD, &CHL, &CHN, &HKG,
-    &MAC, &CXR, &CCK, &COL, &COM, &COG, &COK, &CRI, &HRV, &CUB, &CUW, &CYP, &CZE, &PRK, &COD, &DNK,
-    &DJI, &DMA, &DOM, &ECU, &EGY, &SLV, &GNQ, &ERI, &EST, &SWZ, &ETH, &FLK, &FRO, &FJI, &FIN, &FRA,
-    &GUF, &PYF, &ATF, &GAB, &GMB, &GEO, &DEU, &GHA, &GIB, &GRC, &GRL, &GRD, &GLP, &GUM, &GTM, &GGY,
-    &GIN, &GNB, &GUY, &HTI, &HMD, &VAT, &HND, &HUN, &ISL, &IND, &IDN, &IRN, &IRQ, &IRL, &IMN, &ISR,
-    &ITA, &CIV, &JAM, &JPN, &JEY, &JOR, &KAZ, &KEN, &KIR, &KWT, &KGZ, &LAO, &LVA, &LBN, &LSO, &LBR,
-    &LBY, &LIE, &LTU, &LUX, &MDG, &MWI, &MYS, &MDV, &MLI, &MLT, &MHL, &MTQ, &MRT, &MUS, &MYT, &MEX,
-    &FSM, &MCO, &MNG, &MNE, &MSR, &MAR, &MOZ, &MMR, &NAM, &NRU, &NPL, &NLD, &NCL, &NZL, &NIC, &NER,
-    &NGA, &NIU, &NFK, &MNP, &MKD, &NOR, &OMN, &PAK, &PLW, &PAN, &PNG, &PRY, &PER, &PHL, &PCN, &POL,
-    &PRT, &PRI, &QAT, &KOR, &MDA, &REU, &ROU, &RUS, &RWA, &BLM, &SHN, &KNA, &LCA, &MAF, &SPM, &VCT,
-    &WSM, &SMR, &STP, &SAU, &SEN, &SRB, &SYC, &SLE, &SGP, &SXM, &SVK, &SVN, &SLB, &SOM, &ZAF, &SGS,
-    &SSD, &ESP, &LKA, &PSE, &SDN, &SUR, &SJM, &SWE, &CHE, &SYR, &TWN, &TJK, &THA, &TLS, &TGO, &TKL,
-    &TON, &TTO, &TUN, &TUR, &TKM, &TCA, &TUV, &UGA, &UKR, &ARE, &GBR, &TZA, &UMI, &USA, &VIR, &URY,
-    &UZB, &VUT, &VEN, &VNM, &WLF, &ESH, &YEM, &ZMB, &ZWE, &AIN_IOC, &EOR_IOC, &NPA_IOC, &ROC_IOC,
-    &RPC_IOC, &RPT_IOC, &KOS_IOC,
+const COUNTRY_IOC: [&'static IsoIoc; 257] = [
+    &AFG, &ALA, &ALB, &DZA, &ASM, &AND, &AGO, &AHO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT,
+    &AZE, &BHS, &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT,
+    &BRA, &IOT, &VGB, &BRN, &BGR, &BFA, &BDI, &CPV, &KHM, &CMR, &CAN, &CYM, &CAF, &TCD, &CHL, &CHN,
+    &HKG, &MAC, &CXR, &CCK, &COL, &COM, &COG, &COK, &CRI, &HRV, &CUB, &CUW, &CYP, &CZE, &PRK, &COD,
+    &DNK, &DJI, &DMA, &DOM, &ECU, &EGY, &SLV, &GNQ, &ERI, &EST, &SWZ, &ETH, &FLK, &FRO, &FJI, &FIN,
+    &FRA, &GUF, &PYF, &ATF, &GAB, &GMB, &GEO, &DEU, &GHA, &GIB, &GRC, &GRL, &GRD, &GLP, &GUM, &GTM,
+    &GGY, &GIN, &GNB, &GUY, &HTI, &HMD, &VAT, &HND, &HUN, &ISL, &IND, &IDN, &IRN, &IRQ, &IRL, &IMN,
+    &ISR, &ITA, &CIV, &JAM, &JPN, &JEY, &JOR, &KAZ, &KEN, &KIR, &KWT, &KGZ, &LAO, &LVA, &LBN, &LSO,
+    &LBR, &LBY, &LIE, &LTU, &LUX, &MDG, &MWI, &MYS, &MDV, &MLI, &MLT, &MHL, &MTQ, &MRT, &MUS, &MYT,
+    &MEX, &FSM, &MCO, &MNG, &MNE, &MSR, &MAR, &MOZ, &MMR, &NAM, &NRU, &NPL, &NLD, &NCL, &NZL, &NIC,
+    &NER, &NGA, &NIU, &NFK, &MNP, &MKD, &NOR, &OMN, &PAK, &PLW, &PAN, &PNG, &PRY, &PER, &PHL, &PCN,
+    &POL, &PRT, &PRI, &QAT, &KOR, &MDA, &REU, &ROU, &RUS, &RWA, &BLM, &SHN, &KNA, &LCA, &MAF, &SPM,
+    &VCT, &WSM, &SMR, &STP, &SAU, &SEN, &SRB, &SYC, &SLE, &SGP, &SXM, &SVK, &SVN, &SLB, &SOM, &ZAF,
+    &SGS, &SSD, &ESP, &LKA, &PSE, &SDN, &SUR, &SJM, &SWE, &CHE, &SYR, &TWN, &TJK, &THA, &TLS, &TGO,
+    &TKL, &TON, &TTO, &TUN, &TUR, &TKM, &TCA, &TUV, &UGA, &UKR, &ARE, &GBR, &TZA, &UMI, &USA, &VIR,
+    &URY, &UZB, &VUT, &VEN, &VNM, &WLF, &ESH, &YEM, &ZMB, &ZWE, &AIN_IOC, &EOR_IOC, &NPA_IOC,
+    &ROC_IOC, &RPC_IOC, &RPT_IOC, &KOS_IOC,
 ];
 
 pub fn code_to_country(code: &str) -> Option<Country> {
