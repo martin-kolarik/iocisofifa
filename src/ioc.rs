@@ -258,6 +258,7 @@ const VNM: IsoIoc = Different(Country::VNM, "VIE");
 const WLF: IsoIoc = Different(Country::WLF, "WAF");
 const ESH: IsoIoc = Same(Country::ESH);
 const YEM: IsoIoc = Same(Country::YEM);
+const YUG: IsoIoc = Same(Country::YUG);
 const ZMB: IsoIoc = Different(Country::ZMB, "ZAM");
 const ZWE: IsoIoc = Different(Country::ZWE, "ZIM");
 
@@ -283,7 +284,7 @@ const RPC_IOC: IsoIoc = Different(Country::RPC, RPC);
 pub const RPT: &str = "RPT";
 const RPT_IOC: IsoIoc = Different(Country::RPT, RPT);
 
-const COUNTRY_IOC: [&'static IsoIoc; 257] = [
+const COUNTRY_IOC: [&'static IsoIoc; 258] = [
     &AFG, &ALA, &ALB, &DZA, &ASM, &AND, &AGO, &AHO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT,
     &AZE, &BHS, &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT,
     &BRA, &IOT, &VGB, &BRN, &BGR, &BFA, &BDI, &CPV, &KHM, &CMR, &CAN, &CYM, &CAF, &TCD, &CHL, &CHN,
@@ -299,7 +300,7 @@ const COUNTRY_IOC: [&'static IsoIoc; 257] = [
     &VCT, &WSM, &SMR, &STP, &SAU, &SEN, &SRB, &SYC, &SLE, &SGP, &SXM, &SVK, &SVN, &SLB, &SOM, &ZAF,
     &SGS, &SSD, &ESP, &LKA, &PSE, &SDN, &SUR, &SJM, &SWE, &CHE, &SYR, &TWN, &TJK, &THA, &TLS, &TGO,
     &TKL, &TON, &TTO, &TUN, &TUR, &TKM, &TCA, &TUV, &UGA, &UKR, &ARE, &GBR, &TZA, &UMI, &USA, &VIR,
-    &URY, &UZB, &VUT, &VEN, &VNM, &WLF, &ESH, &YEM, &ZMB, &ZWE, &AIN_IOC, &EOR_IOC, &NPA_IOC,
+    &URY, &UZB, &VUT, &VEN, &VNM, &WLF, &ESH, &YEM, &YUG, &ZMB, &ZWE, &AIN_IOC, &EOR_IOC, &NPA_IOC,
     &ROC_IOC, &RPC_IOC, &RPT_IOC, &KOS_IOC,
 ];
 

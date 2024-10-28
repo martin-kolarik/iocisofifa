@@ -245,6 +245,7 @@ const WAL: CountryName = (Country::WAL, "Wales");
 const WLF: CountryName = (Country::WLF, "Wallis and Futuna");
 const ESH: CountryName = (Country::ESH, "Western Sahara");
 const YEM: CountryName = (Country::YEM, "Yemen");
+const YUG: CountryName = (Country::YUG, "Yugoslavia");
 const ZMB: CountryName = (Country::ZMB, "Zambia");
 const ZWE: CountryName = (Country::ZWE, "Zimbabwe");
 
@@ -256,7 +257,7 @@ const ROC: CountryName = (Country::ROC, "Russian Olympic Committee");
 const RPC: CountryName = (Country::RPC, "Russian Paralympic Committee");
 const RPT: CountryName = (Country::RPT, "Refugee Paralympic Team");
 
-const COUNTRY_NAME: [&CountryName; 251] = [
+const COUNTRY_NAME: [&CountryName; 252] = [
     &AFG, &ALB, &DZA, &ASM, &AND, &ANT, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE,
     &BHS, &BHR, &BGD, &BRB, &BLR, &BEL, &BLZ, &BEN, &BMU, &BTN, &BOL, &BES, &BIH, &BWA, &BVT, &BRA,
     &BRN, &BGR, &BFA, &BDI, &KHM, &CMR, &CAN, &CPV, &CYM, &CAF, &TCD, &CHL, &CHN, &TWN, &CXR, &CCK,
@@ -272,7 +273,7 @@ const COUNTRY_NAME: [&CountryName; 251] = [
     &SEN, &SRB, &SYC, &SLE, &SGP, &SVK, &SVN, &STP, &SLB, &SOM, &ZAF, &SGS, &ESP, &LKA, &SDN, &SUR,
     &SJM, &SWE, &SWZ1, &SWZ2, &CHE, &SYR, &TJK, &TZA, &THA, &TLS, &TGO, &TKL, &TON, &TTO, &TUN,
     &TUR, &TKM, &TCA, &TUV, &UGA, &UKR, &ARE, &GBR, &USA, &URY, &UZB, &VUT, &VAT, &VEN, &VNM, &VGB,
-    &VIR, &VRT, &WAL, &WLF, &ESH, &YEM, &ZMB, &ZWE, &AIN, &EOR, &NPA, &ROC, &RPC, &RPT,
+    &VIR, &VRT, &WAL, &WLF, &ESH, &YEM, &YUG, &ZMB, &ZWE, &AIN, &EOR, &NPA, &ROC, &RPC, &RPT,
 ];
 
 pub fn name_to_country(name: &str) -> Option<Country> {

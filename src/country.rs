@@ -269,6 +269,7 @@ pub enum Country {
     WSM = 882,
     XKX = 900, // Kosovo
     YEM = 887,
+    YUG = 891, // historical
     ZAF = 710,
     ZMB = 894,
     ZWE = 716,
@@ -525,6 +526,7 @@ impl IocIsoFifa for Country {
             876 => Self::WLF,
             732 => Self::ESH,
             887 => Self::YEM,
+            891 => Self::YUG, // historical
             894 => Self::ZMB,
             716 => Self::ZWE,
             900 => Self::XKX, // Kosovo
