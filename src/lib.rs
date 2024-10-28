@@ -13,7 +13,10 @@ mod iso_alpha3;
 pub use iso_alpha3::NAC;
 
 mod iso_name;
+
+#[cfg(feature = "serde")]
 mod serde;
+
 mod uppercase;
 
 mod interface;
