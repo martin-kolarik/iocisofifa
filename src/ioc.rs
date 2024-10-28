@@ -7,7 +7,7 @@ enum IsoIoc {
 
 use IsoIoc::*;
 
-use crate::{country::Country, iso_alpha3::country_to_alpha3};
+use crate::{country::Country, iso_alpha3};
 
 // full ISO 3166-1 mapping
 const AFG: IsoIoc = Same(Country::AFG);
@@ -261,25 +261,25 @@ const ZMB: IsoIoc = Different(Country::ZMB, "ZAM");
 const ZWE: IsoIoc = Different(Country::ZWE, "ZIM");
 
 // IOC special codes
-const KOS: &str = "KOS";
+pub const KOS: &str = "KOS";
 const KOS_IOC: IsoIoc = Different(Country::XKX, KOS);
 
-const AIN: &str = "AIN";
+pub const AIN: &str = "AIN";
 const AIN_IOC: IsoIoc = Different(Country::AIN, AIN);
 
-const EOR: &str = "EOR";
+pub const EOR: &str = "EOR";
 const EOR_IOC: IsoIoc = Different(Country::EOR, EOR);
 
-const NPA: &str = "NPA";
+pub const NPA: &str = "NPA";
 const NPA_IOC: IsoIoc = Different(Country::NPA, NPA);
 
-const ROC: &str = "ROC";
+pub const ROC: &str = "ROC";
 const ROC_IOC: IsoIoc = Different(Country::ROC, ROC);
 
-const RPC: &str = "RPC";
+pub const RPC: &str = "RPC";
 const RPC_IOC: IsoIoc = Different(Country::RPC, RPC);
 
-const RPT: &str = "RPT";
+pub const RPT: &str = "RPT";
 const RPT_IOC: IsoIoc = Different(Country::RPT, RPT);
 
 const COUNTRY_IOC: [&'static IsoIoc; 256] = [
@@ -302,18 +302,18 @@ const COUNTRY_IOC: [&'static IsoIoc; 256] = [
     &RPC_IOC, &RPT_IOC, &KOS_IOC,
 ];
 
-pub fn ioc_to_country(candidate: &str) -> Option<Country> {
+pub fn code_to_country(code: &str) -> Option<Country> {
     COUNTRY_IOC.iter().find_map(|iso_ioc| match iso_ioc {
-        Same(country) if candidate == country_to_alpha3(*country).unwrap() => Some(*country),
-        Different(country, ioc) if candidate == *ioc => Some(*country),
+        Same(country) if iso_alpha3::country_to_code(*country) == Some(code) => Some(*country),
+        Different(country, candidate) if *candidate == code => Some(*country),
         _ => None,
     })
 }
 
-pub fn country_to_ioc(candidate: Country) -> Option<&'static str> {
+pub fn country_to_code(country: Country) -> Option<&'static str> {
     COUNTRY_IOC.iter().find_map(|iso_ioc| match iso_ioc {
-        Same(country) if candidate == *country => country_to_alpha3(*country),
-        Different(country, ioc) if candidate == *country => Some(*ioc),
+        Same(candidate) if *candidate == country => iso_alpha3::country_to_code(country),
+        Different(candidate, ioc) if *candidate == country => Some(*ioc),
         _ => None,
     })
 }

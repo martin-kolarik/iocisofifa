@@ -280,16 +280,16 @@ const COUNTRY_ALPHA2: [&IsoIso; 250] = [
     &UZB, &VUT, &VEN, &VNM, &WLF, &ESH, &YEM, &ZMB, &ZWE, &XKX,
 ];
 
-pub fn alpha2_to_country(candidate: &str) -> Option<Country> {
+pub fn code_to_country(code: &str) -> Option<Country> {
     COUNTRY_ALPHA2.iter().find_map(|iso_iso| match iso_iso {
-        Both(country, alpha2) if candidate == *alpha2 => Some(*country),
+        Both(country, candidate) if *candidate == code => Some(*country),
         _ => None,
     })
 }
 
-pub fn country_to_alpha2(candidate: Country) -> Option<&'static str> {
+pub fn country_to_code(country: Country) -> Option<&'static str> {
     COUNTRY_ALPHA2.iter().find_map(|iso_iso| match iso_iso {
-        Both(country, alpha2) if candidate == *country => Some(*alpha2),
+        Both(candidate, alpha2) if *candidate == country => Some(*alpha2),
         _ => None,
     })
 }

@@ -1,9 +1,9 @@
 use crate::{
-    fifa, ioc, ioc_name, iso_alpha2,
+    fifa, fifa_name, ioc, ioc_name, iso_alpha2,
     iso_alpha3::{self},
     iso_name,
     uppercase::uppercase,
-    IocIsoFifa,
+    IocIsoFifa, Precedence,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -276,6 +276,8 @@ pub enum Country {
     NIR = 921,
     SCO = 922,
     WAL = 923,
+
+    NAC = 999,
 }
 
 impl IocIsoFifa for Country {
@@ -543,6 +545,7 @@ impl IocIsoFifa for Country {
             921 => Self::NIR,
             922 => Self::SCO,
             923 => Self::WAL,
+            999 => Self::NAC,
             _ => return None,
         };
         Some(country)
@@ -551,13 +554,13 @@ impl IocIsoFifa for Country {
     fn from_alpha2(alpha2: &str) -> Option<Self> {
         let mut buffer = [0u8; 2];
         let candidate = uppercase(alpha2, &mut buffer)?;
-        iso_alpha2::alpha2_to_country(candidate)
+        iso_alpha2::code_to_country(candidate)
     }
 
     fn from_alpha3(alpha3: &str) -> Option<Self> {
         let mut buffer = [0u8; 3];
         let candidate = uppercase(alpha3, &mut buffer)?;
-        iso_alpha3::alpha3_to_country(candidate)
+        iso_alpha3::code_to_country(candidate)
     }
 
     fn from_iso_name(name: &str) -> Option<Self> {
@@ -567,7 +570,7 @@ impl IocIsoFifa for Country {
     fn from_ioc(ioc: &str) -> Option<Self> {
         let mut buffer = [0u8; 3];
         let candidate = uppercase(ioc, &mut buffer)?;
-        ioc::ioc_to_country(candidate)
+        ioc::code_to_country(candidate)
     }
 
     fn from_ioc_name(name: &str) -> Option<Self> {
@@ -577,39 +580,80 @@ impl IocIsoFifa for Country {
     fn from_fifa(fifa: &str) -> Option<Self> {
         let mut buffer = [0u8; 3];
         let candidate = uppercase(fifa, &mut buffer)?;
-        fifa::fifa_to_country(candidate)
+        fifa::code_to_country(candidate)
     }
 
-    fn from_alpha3_ioc(code: &str) -> Option<Self> {
-        let mut buffer = [0u8; 3];
-        let candidate = uppercase(code, &mut buffer)?;
-        iso_alpha3::alpha3_to_country(candidate).or_else(|| ioc::ioc_to_country(candidate))
+    fn from_code(code: &str, precedence: Precedence) -> Option<Self> {
+        match code.len() {
+            0..=1 | 4.. => None,
+            2 => {
+                let mut buffer = [0u8; 2];
+                let code = uppercase(code, &mut buffer)?;
+                Self::from_alpha2(code)
+            }
+            3 => {
+                use Precedence::*;
+
+                let mut buffer = [0u8; 3];
+                let code = uppercase(code, &mut buffer)?;
+                match precedence {
+                    IsoFifaIoc | IsoIocFifa => iso_alpha3::code_to_country(code),
+                    IocIsoFifa | IocFifaIso => ioc::code_to_country(code),
+                    FifaIsoIoc | FifaIocIso => fifa::code_to_country(code),
+                }
+                .or_else(|| match precedence {
+                    IocIsoFifa | FifaIsoIoc => iso_alpha3::code_to_country(code),
+                    IsoIocFifa | FifaIocIso => ioc::code_to_country(code),
+                    IsoFifaIoc | IocFifaIso => fifa::code_to_country(code),
+                })
+                .or_else(|| match precedence {
+                    IocFifaIso | FifaIocIso => iso_alpha3::code_to_country(code),
+                    IsoFifaIoc | FifaIsoIoc => ioc::code_to_country(code),
+                    IsoIocFifa | IocIsoFifa => fifa::code_to_country(code),
+                })
+            }
+        }
     }
 
-    fn from_alpha3_fifa(code: &str) -> Option<Self> {
-        let mut buffer = [0u8; 3];
-        let candidate = uppercase(code, &mut buffer)?;
-        iso_alpha3::alpha3_to_country(candidate).or_else(|| fifa::fifa_to_country(candidate))
+    fn from_name(name: &str, precedence: Precedence) -> Option<Self> {
+        use Precedence::*;
+
+        match precedence {
+            IsoFifaIoc | IsoIocFifa => iso_name::name_to_country(name),
+            IocIsoFifa | IocFifaIso => ioc_name::name_to_country(name),
+            FifaIsoIoc | FifaIocIso => fifa_name::name_to_country(name),
+        }
+        .or_else(|| match precedence {
+            IocIsoFifa | FifaIsoIoc => iso_name::name_to_country(name),
+            IsoIocFifa | FifaIocIso => ioc_name::name_to_country(name),
+            IsoFifaIoc | IocFifaIso => fifa_name::name_to_country(name),
+        })
+        .or_else(|| match precedence {
+            IocFifaIso | FifaIocIso => iso_name::name_to_country(name),
+            IsoFifaIoc | FifaIsoIoc => ioc_name::name_to_country(name),
+            IsoIocFifa | IocIsoFifa => fifa_name::name_to_country(name),
+        })
     }
 
-    fn from_iso_ioc_name(name: &str) -> Option<Self> {
-        iso_name::name_to_country(name).or_else(|| ioc_name::name_to_country(name))
-    }
+    #[cfg(feature = "std")]
+    fn from_name_caseless(name: &str, precedence: Precedence) -> Option<Self> {
+        use Precedence::*;
 
-    fn from_ioc_alpha3(code: &str) -> Option<Self> {
-        let mut buffer = [0u8; 3];
-        let candidate = uppercase(code, &mut buffer)?;
-        ioc::ioc_to_country(candidate).or_else(|| iso_alpha3::alpha3_to_country(candidate))
-    }
-
-    fn from_ioc_iso_name(name: &str) -> Option<Self> {
-        ioc_name::name_to_country(name).or_else(|| iso_name::name_to_country(name))
-    }
-
-    fn from_fifa_alpha3(code: &str) -> Option<Self> {
-        let mut buffer = [0u8; 3];
-        let candidate = uppercase(code, &mut buffer)?;
-        fifa::fifa_to_country(candidate).or_else(|| iso_alpha3::alpha3_to_country(candidate))
+        match precedence {
+            IsoFifaIoc | IsoIocFifa => iso_name::name_to_country_caseless(name),
+            IocIsoFifa | IocFifaIso => ioc_name::name_to_country_caseless(name),
+            FifaIsoIoc | FifaIocIso => fifa_name::name_to_country_caseless(name),
+        }
+        .or_else(|| match precedence {
+            IocIsoFifa | FifaIsoIoc => iso_name::name_to_country_caseless(name),
+            IsoIocFifa | FifaIocIso => ioc_name::name_to_country_caseless(name),
+            IsoFifaIoc | IocFifaIso => fifa_name::name_to_country_caseless(name),
+        })
+        .or_else(|| match precedence {
+            IocFifaIso | FifaIocIso => iso_name::name_to_country_caseless(name),
+            IsoFifaIoc | FifaIsoIoc => ioc_name::name_to_country_caseless(name),
+            IsoIocFifa | IocIsoFifa => fifa_name::name_to_country_caseless(name),
+        })
     }
 
     fn numeric(&self) -> Option<u32> {
@@ -617,11 +661,11 @@ impl IocIsoFifa for Country {
     }
 
     fn alpha2(&self) -> Option<&'static str> {
-        iso_alpha2::country_to_alpha2(*self)
+        iso_alpha2::country_to_code(*self)
     }
 
     fn alpha3(&self) -> Option<&'static str> {
-        iso_alpha3::country_to_alpha3(*self)
+        iso_alpha3::country_to_code(*self)
     }
 
     fn iso_name(&self) -> Option<&'static str> {
@@ -629,7 +673,7 @@ impl IocIsoFifa for Country {
     }
 
     fn ioc(&self) -> Option<&'static str> {
-        ioc::country_to_ioc(*self)
+        ioc::country_to_code(*self)
     }
 
     fn ioc_name(&self) -> Option<&'static str> {
@@ -637,30 +681,46 @@ impl IocIsoFifa for Country {
     }
 
     fn fifa(&self) -> Option<&'static str> {
-        fifa::country_to_fifa(*self)
+        fifa::country_to_code(*self)
     }
 
-    fn alpha3_ioc(&self) -> Option<&'static str> {
-        iso_alpha3::country_to_alpha3(*self).or_else(|| ioc::country_to_ioc(*self))
+    fn code(&self, precedence: Precedence) -> Option<&'static str> {
+        use Precedence::*;
+
+        match precedence {
+            IsoFifaIoc | IsoIocFifa => iso_alpha3::country_to_code(*self),
+            IocIsoFifa | IocFifaIso => ioc::country_to_code(*self),
+            FifaIsoIoc | FifaIocIso => fifa::country_to_code(*self),
+        }
+        .or_else(|| match precedence {
+            IocIsoFifa | FifaIsoIoc => iso_alpha3::country_to_code(*self),
+            IsoIocFifa | FifaIocIso => ioc::country_to_code(*self),
+            IsoFifaIoc | IocFifaIso => fifa::country_to_code(*self),
+        })
+        .or_else(|| match precedence {
+            IocFifaIso | FifaIocIso => iso_alpha3::country_to_code(*self),
+            IsoFifaIoc | FifaIsoIoc => ioc::country_to_code(*self),
+            IsoIocFifa | IocIsoFifa => fifa::country_to_code(*self),
+        })
     }
 
-    fn iso_ioc_name(&self) -> Option<&'static str> {
-        iso_name::country_to_name(*self).or_else(|| ioc_name::country_to_name(*self))
-    }
+    fn name(&self, precedence: Precedence) -> Option<&'static str> {
+        use Precedence::*;
 
-    fn alpha3_fifa(&self) -> Option<&'static str> {
-        iso_alpha3::country_to_alpha3(*self).or_else(|| fifa::country_to_fifa(*self))
-    }
-
-    fn ioc_alpha3(&self) -> Option<&'static str> {
-        ioc::country_to_ioc(*self).or_else(|| iso_alpha3::country_to_alpha3(*self))
-    }
-
-    fn ioc_iso_name(&self) -> Option<&'static str> {
-        ioc_name::country_to_name(*self).or_else(|| iso_name::country_to_name(*self))
-    }
-
-    fn fifa_alpha3(&self) -> Option<&'static str> {
-        fifa::country_to_fifa(*self).or_else(|| iso_alpha3::country_to_alpha3(*self))
+        match precedence {
+            IsoFifaIoc | IsoIocFifa => iso_name::country_to_name(*self),
+            IocIsoFifa | IocFifaIso => ioc_name::country_to_name(*self),
+            FifaIsoIoc | FifaIocIso => fifa_name::country_to_name(*self),
+        }
+        .or_else(|| match precedence {
+            IocIsoFifa | FifaIsoIoc => iso_name::country_to_name(*self),
+            IsoIocFifa | FifaIocIso => ioc_name::country_to_name(*self),
+            IsoFifaIoc | IocFifaIso => fifa_name::country_to_name(*self),
+        })
+        .or_else(|| match precedence {
+            IocFifaIso | FifaIocIso => iso_name::country_to_name(*self),
+            IsoFifaIoc | FifaIsoIoc => ioc_name::country_to_name(*self),
+            IsoIocFifa | IocIsoFifa => fifa_name::country_to_name(*self),
+        })
     }
 }

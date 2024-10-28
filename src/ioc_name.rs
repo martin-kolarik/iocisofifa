@@ -246,19 +246,12 @@ const ZMB: CountryName = (Country::ZMB, "Zambia");
 const ZWE: CountryName = (Country::ZWE, "Zimbabwe");
 
 // Special codes
-const AIN_NAME: &str = "Individual Neutral Athletes";
-const EOR_NAME: &str = "Refugee Olympic Team";
-const NPA_NAME: &str = "Neutral Paralympic Athletes";
-const ROC_NAME: &str = "Russian Olympic Committee";
-const RPC_NAME: &str = "Russian Paralympic Committee";
-const RPT_NAME: &str = "Refugee Paralympic Team";
-
-const AIN: CountryName = (Country::AIN, AIN_NAME);
-const EOR: CountryName = (Country::EOR, EOR_NAME);
-const NPA: CountryName = (Country::NPA, NPA_NAME);
-const ROC: CountryName = (Country::ROC, ROC_NAME);
-const RPC: CountryName = (Country::RPC, RPC_NAME);
-const RPT: CountryName = (Country::RPT, RPT_NAME);
+const AIN: CountryName = (Country::AIN, "Individual Neutral Athletes");
+const EOR: CountryName = (Country::EOR, "Refugee Olympic Team");
+const NPA: CountryName = (Country::NPA, "Neutral Paralympic Athletes");
+const ROC: CountryName = (Country::ROC, "Russian Olympic Committee");
+const RPC: CountryName = (Country::RPC, "Russian Paralympic Committee");
+const RPT: CountryName = (Country::RPT, "Refugee Paralympic Team");
 
 const COUNTRY_NAME: [&CountryName; 248] = [
     &AFG, &ALB, &DZA, &ASM, &AND, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE, &BHS,
@@ -279,16 +272,31 @@ const COUNTRY_NAME: [&CountryName; 248] = [
     &ESH, &YEM, &ZMB, &ZWE, &AIN, &EOR, &NPA, &ROC, &RPC, &RPT,
 ];
 
-pub fn name_to_country(candidate: &str) -> Option<Country> {
-    COUNTRY_NAME.iter().find_map(|name| match name {
-        (country, name) if candidate == *name => Some(*country),
-        _ => None,
-    })
+pub fn name_to_country(name: &str) -> Option<Country> {
+    COUNTRY_NAME
+        .iter()
+        .find_map(|country_name| match country_name {
+            (country, candidate) if *candidate == name => Some(*country),
+            _ => None,
+        })
 }
 
-pub fn country_to_name(candidate: Country) -> Option<&'static str> {
-    COUNTRY_NAME.iter().find_map(|name| match name {
-        (country, name) if candidate == *country => Some(*name),
-        _ => None,
-    })
+#[cfg(feature = "std")]
+pub fn name_to_country_caseless(name: &str) -> Option<Country> {
+    let name = name.to_uppercase();
+    COUNTRY_NAME
+        .iter()
+        .find_map(|country_name| match country_name {
+            (country, candidate) if candidate.to_uppercase() == name => Some(*country),
+            _ => None,
+        })
+}
+
+pub fn country_to_name(country: Country) -> Option<&'static str> {
+    COUNTRY_NAME
+        .iter()
+        .find_map(|country_name| match country_name {
+            (candidate, name) if *candidate == country => Some(*name),
+            _ => None,
+        })
 }

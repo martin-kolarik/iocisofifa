@@ -1,16 +1,20 @@
-#![no_std]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 mod country;
 pub use country::*;
 
 mod fifa;
+mod fifa_name;
 mod ioc;
 mod ioc_name;
 mod iso_alpha2;
+
 mod iso_alpha3;
+pub use iso_alpha3::NAC;
+
 mod iso_name;
-mod uppercase;
 mod serde;
+mod uppercase;
 
 mod interface;
 pub use interface::*;

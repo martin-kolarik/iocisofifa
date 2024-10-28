@@ -7,7 +7,7 @@ enum IsoFifa {
 
 use IsoFifa::*;
 
-use crate::{country::Country, iso_alpha3::country_to_alpha3};
+use crate::{country::Country, iso_alpha3};
 
 // full ISO 3166-1 mapping
 const AFG: IsoFifa = Same(Country::AFG);
@@ -261,25 +261,20 @@ const ZMB: IsoFifa = Different(Country::ZMB, "ZAM");
 const ZWE: IsoFifa = Different(Country::ZWE, "ZIM");
 
 // FIFA special codes
-const KOS: &str = "KOS";
+pub const KOS: &str = "KOS";
 const KOS_FIFA: IsoFifa = Different(Country::XKX, KOS);
-// const KOS_NAME: &str = "Kosovo";
 
-const ENG: &str = "ENG";
+pub const ENG: &str = "ENG";
 const ENG_FIFA: IsoFifa = Different(Country::ENG, ENG);
-// const ENG_NAME: &str = "England";
 
-const NIR: &str = "NIR";
+pub const NIR: &str = "NIR";
 const NIR_FIFA: IsoFifa = Different(Country::NIR, NIR);
-// const NIR_NAME: &str = "Northern Ireland";
 
-const SCO: &str = "SCO";
+pub const SCO: &str = "SCO";
 const SCO_FIFA: IsoFifa = Different(Country::SCO, SCO);
-// const SCO_NAME: &str = "Scotland";
 
-const WAL: &str = "WAL";
+pub const WAL: &str = "WAL";
 const WAL_FIFA: IsoFifa = Different(Country::WAL, WAL);
-// const WAL_NAME: &str = "Wales";
 
 const COUNTRY_FIFA: [&'static IsoFifa; 254] = [
     &AFG, &ALA, &ALB, &DZA, &ASM, &AND, &AGO, &AIA, &ATA, &ATG, &ARG, &ARM, &ABW, &AUS, &AUT, &AZE,
@@ -301,18 +296,18 @@ const COUNTRY_FIFA: [&'static IsoFifa; 254] = [
     &SCO_FIFA, &WAL_FIFA,
 ];
 
-pub fn fifa_to_country(candidate: &str) -> Option<Country> {
+pub fn code_to_country(code: &str) -> Option<Country> {
     COUNTRY_FIFA.iter().find_map(|iso_ioc| match iso_ioc {
-        Same(country) if candidate == country_to_alpha3(*country).unwrap() => Some(*country),
-        Different(country, ioc) if candidate == *ioc => Some(*country),
+        Same(country) if iso_alpha3::country_to_code(*country) == Some(code) => Some(*country),
+        Different(country, candidate) if *candidate == code => Some(*country),
         _ => None,
     })
 }
 
-pub fn country_to_fifa(candidate: Country) -> Option<&'static str> {
+pub fn country_to_code(country: Country) -> Option<&'static str> {
     COUNTRY_FIFA.iter().find_map(|iso_ioc| match iso_ioc {
-        Same(country) if candidate == *country => country_to_alpha3(*country),
-        Different(country, ioc) if candidate == *country => Some(*ioc),
+        Same(candidate) if *candidate == country => iso_alpha3::country_to_code(country),
+        Different(candidate, ioc) if *candidate == country => Some(*ioc),
         _ => None,
     })
 }

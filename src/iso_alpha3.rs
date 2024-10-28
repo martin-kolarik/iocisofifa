@@ -253,8 +253,11 @@ const ZWE: &str = "ZWE";
 // Kosovo
 const XKX: &str = "XKX";
 
-pub fn alpha3_to_country(candidate: &str) -> Option<Country> {
-    let country = match candidate {
+// Not a Code
+pub const NAC: &str = "NAC";
+
+pub fn code_to_country(code: &str) -> Option<Country> {
+    let country = match code {
         AFG => Country::AFG,
         ALA => Country::ALA,
         ALB => Country::ALB,
@@ -505,12 +508,13 @@ pub fn alpha3_to_country(candidate: &str) -> Option<Country> {
         ZMB => Country::ZMB,
         ZWE => Country::ZWE,
         XKX => Country::XKX,
+        NAC => Country::NAC,
         _ => return None,
     };
     Some(country)
 }
 
-pub const fn country_to_alpha3(country: Country) -> Option<&'static str> {
+pub const fn country_to_code(country: Country) -> Option<&'static str> {
     let alpha3 = match country {
         Country::AFG => AFG,
         Country::ALA => ALA,
@@ -762,6 +766,7 @@ pub const fn country_to_alpha3(country: Country) -> Option<&'static str> {
         Country::ZMB => ZMB,
         Country::ZWE => ZWE,
         Country::XKX => XKX,
+        Country::NAC => NAC,
         _ => return None,
     };
     Some(alpha3)
