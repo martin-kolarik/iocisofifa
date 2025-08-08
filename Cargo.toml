@@ -2,7 +2,7 @@
 name = "iocisofifa"
 version = "1.0.0"
 authors = ["martin.kolarik@smartcontrol.cz"]
-description = "IOC, ISO 3661-1, and FIFA country codes conversions."
+description = "IOC, ISO 3166-1, and FIFA country codes conversions."
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["ioc", "iso3166", "iso-3166", "fifa", "country"]
