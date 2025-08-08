@@ -25,7 +25,7 @@ impl<'a> Visitor<'a> for CountryVisitor {
 
     #[inline]
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        formatter.write_str("Expected 3 digit ISO-3166, IOC, or FIFA country code")
+        formatter.write_str("Expected a 3-letter ISO 3166-1, IOC, or FIFA country code")
     }
 
     #[inline]
